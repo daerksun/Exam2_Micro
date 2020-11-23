@@ -1,0 +1,1790 @@
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 #include "p16F887.inc"   ; TODO INSERT CONFIG CODE HERE USING CONFIG BITS GENERATOR
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : Jan 06 2020
+                      00005 ;  MPASM PIC16F887 processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2020 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00810         LIST
+2007   2CF4           00002         __CONFIG        _CONFIG1,       _INTRC_OSC_NOCLKOUT & _WDT_OFF & _PWRTE_OFF & _MCLRE_ON & _CP_OF
+                            F & _CPD_OFF & _BOR_OFF & _IESO_ON & _FCMEN_ON & _LVP_OFF 
+2008   3FFF           00003         __CONFIG        _CONFIG2,       _BOR40V & _WRT_OFF
+                      00004 
+                      00005 RES_VECT  CODE    0x0000            ; processor reset vector
+0000   2???           00006     GOTO    START                   ; go to beginning of program
+                      00007 
+0001   1007           00008     BCF PORTC,0         ;reset
+0002   3001           00009     MOVLW 0x01
+0003   0088           00010     MOVWF PORTD
+                      00011     
+0004   1487           00012     BSF PORTC,1         ;exec
+0005   2???           00013     CALL time
+0006   1087           00014     BCF PORTC,1
+0007   2???           00015     CALL time
+                      00016   
+0008   2???           00017     GOTO    START
+                      00018 
+                      00019 MAIN_PROG CODE                      ; let linker place main program
+                      00020 
+0000                  00021 START
+                      00022 
+  00000030            00023 i equ 0x30
+  00000031            00024 j equ 0x31
+  00000032            00025 k equ 0x32
+  00000033            00026 c1 equ 0x33
+  00000034            00027 c2 equ 0x34
+  00000035            00028 c3 equ 0x35
+  00000036            00029 c4 equ 0x36
+  00000037            00030 c5 equ 0x37
+  00000038            00031 c6 equ 0x38
+  00000039            00032 c7 equ 0x39
+  00000040            00033 c8 equ 0x40
+  00000041            00034 d1 equ 0x41
+  00000042            00035 d2 equ 0x42
+  00000043            00036 d3 equ 0x43
+  00000044            00037 d4 equ 0x44
+  00000045            00038 d5 equ 0x45
+  00000046            00039 d6 equ 0x46
+  00000047            00040 d7 equ 0x47
+  00000048            00041 d8 equ 0x48
+  00000049            00042 aux equ 0x49
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00043 
+0000                  00044 START
+                      00045 
+0000   1283 1303      00046     BANKSEL PORTA ;
+0002   0185           00047     CLRF PORTA ;Init PORTA
+0003   1683 1703      00048     BANKSEL ANSEL ;
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0005   0188           00049     CLRF ANSEL ;digital I/O
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0006   0189           00050     CLRF ANSELH
+0007   1683 1303      00051     BANKSEL TRISA ;
+0009   30F0           00052     MOVLW b'11110000'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000A   0085           00053     MOVWF TRISA 
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000B   0186           00054     CLRF TRISB
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000C   0187           00055     CLRF TRISC
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000D   0188           00056     CLRF TRISD
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000E   0189           00057     CLRF TRISE
+000F   1303           00058     BCF STATUS,RP1
+0010   1283           00059     BCF STATUS,RP0
+0011   1087           00060     BCF PORTC,1
+0012   1007           00061     BCF PORTC,0
+                      00062     
+0013   302A           00063     MOVLW '*'
+0014   00C1           00064     MOVWF d1
+0015   302A           00065     MOVLW '*'
+0016   00C2           00066     MOVWF d2
+0017   302A           00067     MOVLW '*'
+0018   00C3           00068     MOVWF d3
+0019   302A           00069     MOVLW '*'
+001A   00C4           00070     MOVWF d4
+001B   302A           00071     MOVLW '*'
+001C   00C5           00072     MOVWF d5
+001D   302A           00073     MOVLW '*'
+001E   00C6           00074     MOVWF d6
+001F   302A           00075     MOVLW '*'
+0020   00C7           00076     MOVWF d7
+0021   302A           00077     MOVLW '*'
+0022   00C8           00078     MOVWF d8
+                      00079     
+0023   3037           00080     MOVLW '7'
+0024   00B3           00081     MOVWF c1
+0025   3030           00082     MOVLW '0'
+0026   00B4           00083     MOVWF c2
+0027   3038           00084     MOVLW '8'
+0028   00B5           00085     MOVWF c3
+0029   3037           00086     MOVLW '7'
+002A   00B6           00087     MOVWF c4
+002B   3034           00088     MOVLW '4'
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+002C   00B7           00089     MOVWF c5
+002D   3037           00090     MOVLW '7'
+002E   00B8           00091     MOVWF c6
+002F   3033           00092     MOVLW '3'
+0030   00B9           00093     MOVWF c7
+0031   3034           00094     MOVLW '4'
+0032   00C0           00095     MOVWF c8
+                      00096     
+0033                  00097 INITLCD
+0033   1007           00098     BCF PORTC,0         ;reset
+0034   3001           00099     MOVLW 0x01
+0035   0088           00100     MOVWF PORTD
+                      00101     
+0036   1487           00102     BSF PORTC,1         ;exec
+0037   2???           00103     CALL time
+0038   1087           00104     BCF PORTC,1
+0039   2???           00105     CALL time
+                      00106     
+003A   300C           00107     MOVLW 0x0C          ;first line
+003B   0088           00108     MOVWF PORTD
+                      00109     
+003C   1487           00110     BSF PORTC,1         ;exec
+003D   2???           00111     CALL time
+003E   1087           00112     BCF PORTC,1
+003F   2???           00113     CALL time
+                      00114          
+0040   303C           00115     MOVLW 0x3C          ;cursor mode
+0041   0088           00116     MOVWF PORTD
+                      00117     
+0042   1487           00118     BSF PORTC,1         ;exec
+0043   2???           00119     CALL time
+0044   1087           00120     BCF PORTC,1
+0045   2???           00121     CALL time
+                      00122     
+                      00123 
+0046                  00124 INICIO
+                      00125     
+0046   0841           00126     MOVFW d1
+0047   0084           00127     MOVWF FSR
+0048   2???           00128     CALL PANTIN
+                      00129    
+0049   3000           00130     MOVLW b'0'
+004A   1585           00131     BSF PORTA, 3
+004B   1A05           00132     BTFSC PORTA, 4
+004C   3031           00133     MOVLW '1'
+004D   1A85           00134     BTFSC PORTA, 5
+004E   3032           00135     MOVLW '2'
+004F   1B05           00136     BTFSC PORTA, 6
+0050   3033           00137     MOVLW '3'
+0051   1185           00138     BCF PORTA, 3
+0052   00C9           00139     MOVWF aux
+0053   1A49           00140     BTFSC aux, 4
+0054   2???           00141     CALL guarda
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00142     
+                      00143     
+0055   1505           00144     BSF PORTA, 2
+0056   1A05           00145     BTFSC PORTA, 4
+0057   3034           00146     MOVLW '4'
+0058   1A85           00147     BTFSC PORTA, 5
+0059   3035           00148     MOVLW '5'
+005A   1B05           00149     BTFSC PORTA, 6
+005B   3036           00150     MOVLW '6'
+005C   1105           00151     BCF PORTA, 2
+                      00152     
+005D   1485           00153     BSF PORTA, 1
+005E   1A05           00154     BTFSC PORTA, 4
+005F   3037           00155     MOVLW '7'
+0060   1A85           00156     BTFSC PORTA, 5
+0061   3038           00157     MOVLW '8'
+0062   1B05           00158     BTFSC PORTA, 6
+0063   3039           00159     MOVLW '9'
+0064   1085           00160     BCF PORTA, 1
+                      00161     
+0065   1405           00162     BSF PORTA, 0
+0066   1A05           00163     BTFSC PORTA, 4
+0067   302A           00164     MOVLW '*'
+0068   1A85           00165     BTFSC PORTA, 5
+0069   3030           00166     MOVLW '0'
+006A   1B05           00167     BTFSC PORTA, 6
+006B   3023           00168     MOVLW '#'
+006C   1005           00169     BCF PORTA, 0
+                      00170     
+006D   2???           00171     GOTO INICIO
+                      00172 
+                      00173     
+006E                  00174 guarda
+006E   0849           00175     MOVFW aux
+006F   0080           00176     MOVWF INDF
+Message[305]: Using default destination of 1 (file).
+0070   0A84           00177     INCF FSR
+0071   0008           00178     RETURN
+0072                  00179 PANTIN
+                      00180     
+0072   1007           00181     BCF PORTC,0         ;command mode
+0073   2???           00182     CALL time
+                      00183     
+0074   3080           00184     MOVLW 0x80          ;LCD position
+0075   0088           00185     MOVWF PORTD
+0076   2???           00186     CALL exec
+                      00187     
+0077   1407           00188     BSF PORTC,0         ;data mode
+0078   2???           00189     CALL time
+                      00190     
+0079   307C           00191     MOVLW '|'
+007A   0088           00192     MOVWF PORTD
+007B   2???           00193     CALL exec
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00194     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+007C   1007           00195     BCF PORTC,0         ;command mode
+007D   2???           00196     CALL time
+                      00197     
+007E   3084           00198     MOVLW 0x84          ;LCD position 
+007F   0088           00199     MOVWF PORTD
+0080   2???           00200     CALL exec
+                      00201     
+0081   1407           00202     BSF PORTC,0         ;data mode
+0082   2???           00203     CALL time
+                      00204     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0083   0833           00205     MOVFW c1
+0084   0088           00206     MOVWF PORTD
+0085   2???           00207     CALL exec
+0086   0834           00208     MOVFW c2
+0087   0088           00209     MOVWF PORTD
+0088   2???           00210     CALL exec
+0089   0835           00211     MOVFW c3
+008A   0088           00212     MOVWF PORTD
+008B   2???           00213     CALL exec
+008C   0836           00214     MOVFW c4
+008D   0088           00215     MOVWF PORTD
+008E   2???           00216     CALL exec
+008F   0837           00217     MOVFW c5
+0090   0088           00218     MOVWF PORTD
+0091   2???           00219     CALL exec
+0092   0838           00220     MOVFW c6
+0093   0088           00221     MOVWF PORTD
+0094   2???           00222     CALL exec
+0095   0839           00223     MOVFW c7
+0096   0088           00224     MOVWF PORTD
+0097   2???           00225     CALL exec
+0098   0840           00226     MOVFW c8
+0099   0088           00227     MOVWF PORTD
+009A   2???           00228     CALL exec
+                      00229     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+009B   1007           00230     BCF PORTC,0         ;command mode
+009C   2???           00231     CALL time
+                      00232     
+009D   308F           00233     MOVLW 0x8F          ;LCD position 
+009E   0088           00234     MOVWF PORTD
+009F   2???           00235     CALL exec
+                      00236     
+00A0   1407           00237     BSF PORTC,0         ;data mode
+00A1   2???           00238     CALL time
+                      00239     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+00A2   307C           00240     MOVLW '|'
+00A3   0088           00241     MOVWF PORTD
+00A4   2???           00242     CALL exec
+                      00243     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+00A5   1007           00244     BCF PORTC,0         ;command mode
+00A6   2???           00245     CALL time
+                      00246     
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00A7   30C0           00247     MOVLW 0xC0          ;LCD position 
+00A8   0088           00248     MOVWF PORTD
+00A9   2???           00249     CALL exec
+                      00250     
+00AA   1407           00251     BSF PORTC,0         ;data mode
+00AB   2???           00252     CALL time
+                      00253     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00254     
+00AC   307C           00255     MOVLW '|'
+00AD   0088           00256     MOVWF PORTD
+00AE   2???           00257     CALL exec
+                      00258     
+                      00259     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+00AF   1007           00260     BCF PORTC,0         ;command mode
+00B0   2???           00261     CALL time
+                      00262     
+00B1   30C2           00263     MOVLW 0xC2          ;LCD position 
+00B2   0088           00264     MOVWF PORTD
+00B3   2???           00265     CALL exec
+                      00266     
+00B4   1407           00267     BSF PORTC,0         ;data mode
+00B5   2???           00268     CALL time
+                      00269     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00270     
+00B6   3049           00271     MOVLW 'I'
+00B7   0088           00272     MOVWF PORTD
+00B8   2???           00273     CALL exec
+00B9   306E           00274     MOVLW 'n'
+00BA   0088           00275     MOVWF PORTD
+00BB   2???           00276     CALL exec
+00BC   3074           00277     MOVLW 't'
+00BD   0088           00278     MOVWF PORTD
+00BE   2???           00279     CALL exec
+00BF   3072           00280     MOVLW 'r'
+00C0   0088           00281     MOVWF PORTD
+00C1   2???           00282     CALL exec
+00C2   302E           00283     MOVLW '.'
+00C3   0088           00284     MOVWF PORTD
+00C4   2???           00285     CALL exec
+00C5   3020           00286     MOVLW ' '
+00C6   0088           00287     MOVWF PORTD
+00C7   2???           00288     CALL exec
+00C8   3063           00289     MOVLW 'c'
+00C9   0088           00290     MOVWF PORTD
+00CA   2???           00291     CALL exec
+00CB   306C           00292     MOVLW 'l'
+00CC   0088           00293     MOVWF PORTD
+00CD   2???           00294     CALL exec
+00CE   3061           00295     MOVLW 'a'
+00CF   0088           00296     MOVWF PORTD
+00D0   2???           00297     CALL exec
+00D1   3076           00298     MOVLW 'v'
+00D2   0088           00299     MOVWF PORTD
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00D3   2???           00300     CALL exec
+00D4   3065           00301     MOVLW 'e'
+00D5   0088           00302     MOVWF PORTD
+00D6   2???           00303     CALL exec
+00D7   303A           00304     MOVLW ':'
+00D8   0088           00305     MOVWF PORTD
+00D9   2???           00306     CALL exec
+                      00307     
+                      00308     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+00DA   1007           00309     BCF PORTC,0         ;command mode
+00DB   2???           00310     CALL time
+                      00311     
+00DC   30CF           00312     MOVLW 0xCF          ;LCD position 
+00DD   0088           00313     MOVWF PORTD
+00DE   2???           00314     CALL exec
+                      00315     
+00DF   1407           00316     BSF PORTC,0         ;data mode
+00E0   2???           00317     CALL time
+                      00318     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00319     
+00E1   307C           00320     MOVLW '|'
+00E2   0088           00321     MOVWF PORTD
+00E3   2???           00322     CALL exec
+                      00323     
+                      00324     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+00E4   1007           00325     BCF PORTC,0         ;command mode
+00E5   2???           00326     CALL time
+                      00327     
+00E6   3090           00328     MOVLW 0x90          ;LCD position 
+00E7   0088           00329     MOVWF PORTD
+00E8   2???           00330     CALL exec
+                      00331     
+00E9   1407           00332     BSF PORTC,0         ;data mode
+00EA   2???           00333     CALL time
+                      00334     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00335     
+00EB   307C           00336     MOVLW '|'
+00EC   0088           00337     MOVWF PORTD
+00ED   2???           00338     CALL exec
+                      00339     
+                      00340     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+00EE   1007           00341     BCF PORTC,0         ;command mode
+00EF   2???           00342     CALL time
+                      00343     
+00F0   3094           00344     MOVLW 0x94          ;LCD position 
+00F1   0088           00345     MOVWF PORTD
+00F2   2???           00346     CALL exec
+                      00347     
+00F3   1407           00348     BSF PORTC,0         ;data mode
+00F4   2???           00349     CALL time
+                      00350     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00351     
+00F5   0841           00352     MOVFW d1
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00F6   0088           00353     MOVWF PORTD
+00F7   2???           00354     CALL exec
+00F8   0842           00355     MOVFW d2
+00F9   0088           00356     MOVWF PORTD
+00FA   2???           00357     CALL exec
+00FB   0843           00358     MOVFW d3
+00FC   0088           00359     MOVWF PORTD
+00FD   2???           00360     CALL exec
+00FE   0844           00361     MOVFW d4
+00FF   0088           00362     MOVWF PORTD
+0100   2???           00363     CALL exec
+0101   0845           00364     MOVFW d5
+0102   0088           00365     MOVWF PORTD
+0103   2???           00366     CALL exec
+0104   0846           00367     MOVFW d6
+0105   0088           00368     MOVWF PORTD
+0106   2???           00369     CALL exec
+0107   0847           00370     MOVFW d7
+0108   0088           00371     MOVWF PORTD
+0109   2???           00372     CALL exec
+010A   0848           00373     MOVFW d8
+010B   0088           00374     MOVWF PORTD
+010C   2???           00375     CALL exec
+                      00376     
+                      00377     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+010D   1007           00378     BCF PORTC,0         ;command mode
+010E   2???           00379     CALL time
+                      00380     
+010F   309F           00381     MOVLW 0x9F          ;LCD position 
+0110   0088           00382     MOVWF PORTD
+0111   2???           00383     CALL exec
+                      00384     
+0112   1407           00385     BSF PORTC,0         ;data mode
+0113   2???           00386     CALL time
+                      00387     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00388     
+0114   307C           00389     MOVLW '|'
+0115   0088           00390     MOVWF PORTD
+0116   2???           00391     CALL exec
+                      00392     
+                      00393     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0117   1007           00394     BCF PORTC,0         ;command mode
+0118   2???           00395     CALL time
+                      00396     
+0119   30D0           00397     MOVLW 0xD0          ;LCD position 
+011A   0088           00398     MOVWF PORTD
+011B   2???           00399     CALL exec
+                      00400     
+011C   1407           00401     BSF PORTC,0         ;data mode
+011D   2???           00402     CALL time
+                      00403     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00404     
+011E   307C           00405     MOVLW '|'
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+011F   0088           00406     MOVWF PORTD
+0120   2???           00407     CALL exec
+                      00408     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0121   1007           00409     BCF PORTC,0         ;command mode
+0122   2???           00410     CALL time
+                      00411     
+0123   30D6           00412     MOVLW 0xD6          ;LCD position 
+0124   0088           00413     MOVWF PORTD
+0125   2???           00414     CALL exec
+                      00415     
+0126   1407           00416     BSF PORTC,0         ;data mode
+0127   2???           00417     CALL time
+                      00418     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00419     
+0128   3030           00420     MOVLW '0'
+0129   0088           00421     MOVWF PORTD
+012A   2???           00422     CALL exec
+012B   305F           00423     MOVLW '_'
+012C   0088           00424     MOVWF PORTD
+012D   2???           00425     CALL exec
+012E   306F           00426     MOVLW 'o'
+012F   0088           00427     MOVWF PORTD
+0130   2???           00428     CALL exec
+                      00429     
+                      00430     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0131   1007           00431     BCF PORTC,0         ;command mode
+0132   2???           00432     CALL time
+                      00433     
+0133   30DF           00434     MOVLW 0xDF          ;LCD position 
+0134   0088           00435     MOVWF PORTD
+0135   2???           00436     CALL exec
+                      00437     
+0136   1407           00438     BSF PORTC,0         ;data mode
+0137   2???           00439     CALL time
+                      00440     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00441     
+0138   307C           00442     MOVLW '|'
+0139   0088           00443     MOVWF PORTD
+013A   2???           00444     CALL exec
+                      00445     
+013B   3000           00446     MOVLW d'0'
+013C   0089           00447     MOVWF PORTE
+                      00448         
+013D   0008           00449     RETURN
+                      00450     
+013E                  00451 PANTSUC
+                      00452     
+013E   1007           00453     BCF PORTC,0 ;reset
+013F   3001           00454     MOVLW 0x01
+0140   0088           00455     MOVWF PORTD
+0141   1487           00456     BSF PORTC,1 ;exec
+0142   2???           00457     CALL time
+0143   1087           00458     BCF PORTC,1
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0144   2???           00459     CALL time
+                      00460     
+0145   1007           00461     BCF PORTC,0         ;command mode
+0146   2???           00462     CALL time
+                      00463     
+0147   3080           00464     MOVLW 0x80          ;LCD position
+0148   0088           00465     MOVWF PORTD
+0149   2???           00466     CALL exec
+                      00467     
+014A   1407           00468     BSF PORTC,0         ;data mode
+014B   2???           00469     CALL time
+                      00470     
+014C   30F3           00471     MOVLW b'11110011'
+014D   0088           00472     MOVWF PORTD
+014E   2???           00473     CALL exec
+                      00474     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+014F   1007           00475     BCF PORTC,0         ;command mode
+0150   2???           00476     CALL time
+                      00477     
+0151   3084           00478     MOVLW 0x84          ;LCD position 
+0152   0088           00479     MOVWF PORTD
+0153   2???           00480     CALL exec
+                      00481     
+0154   1407           00482     BSF PORTC,0         ;data mode
+0155   2???           00483     CALL time
+                      00484     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00485     
+0156   304C           00486     MOVLW 'L'
+0157   0088           00487     MOVWF PORTD
+0158   2???           00488     CALL exec
+0159   3061           00489     MOVLW 'a'
+015A   0088           00490     MOVWF PORTD
+015B   2???           00491     CALL exec
+015C   3020           00492     MOVLW ' '
+015D   0088           00493     MOVWF PORTD
+015E   2???           00494     CALL exec
+015F   3063           00495     MOVLW 'c'
+0160   0088           00496     MOVWF PORTD
+0161   2???           00497     CALL exec
+0162   306C           00498     MOVLW 'l'
+0163   0088           00499     MOVWF PORTD
+0164   2???           00500     CALL exec
+0165   3061           00501     MOVLW 'a'
+0166   0088           00502     MOVWF PORTD
+0167   2???           00503     CALL exec
+0168   3076           00504     MOVLW 'v'
+0169   0088           00505     MOVWF PORTD
+016A   2???           00506     CALL exec
+016B   3065           00507     MOVLW 'e'
+016C   0088           00508     MOVWF PORTD
+016D   2???           00509     CALL exec
+                      00510     
+                      00511     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+016E   1007           00512     BCF PORTC,0         ;command mode
+016F   2???           00513     CALL time
+                      00514     
+0170   308F           00515     MOVLW 0x8F          ;LCD position 
+0171   0088           00516     MOVWF PORTD
+0172   2???           00517     CALL exec
+                      00518     
+0173   1407           00519     BSF PORTC,0         ;data mode
+0174   2???           00520     CALL time
+                      00521     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00522     
+0175   30F3           00523     MOVLW b'11110011'
+0176   0088           00524     MOVWF PORTD
+0177   2???           00525     CALL exec
+                      00526     
+                      00527     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0178   1007           00528     BCF PORTC,0         ;command mode
+0179   2???           00529     CALL time
+                      00530     
+017A   30C0           00531     MOVLW 0xC0          ;LCD position 
+017B   0088           00532     MOVWF PORTD
+017C   2???           00533     CALL exec
+                      00534     
+017D   1407           00535     BSF PORTC,0         ;data mode
+017E   2???           00536     CALL time
+                      00537     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00538     
+017F   30F3           00539     MOVLW b'11110011'
+0180   0088           00540     MOVWF PORTD
+0181   2???           00541     CALL exec
+                      00542     
+                      00543     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0182   1007           00544     BCF PORTC,0         ;command mode
+0183   2???           00545     CALL time
+                      00546     
+0184   30C3           00547     MOVLW 0xC3          ;LCD position 
+0185   0088           00548     MOVWF PORTD
+0186   2???           00549     CALL exec
+                      00550     
+0187   1407           00551     BSF PORTC,0         ;data mode
+0188   2???           00552     CALL time
+                      00553     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00554     
+0189   3065           00555     MOVLW 'e'
+018A   0088           00556     MOVWF PORTD
+018B   2???           00557     CALL exec
+018C   3073           00558     MOVLW 's'
+018D   0088           00559     MOVWF PORTD
+018E   2???           00560     CALL exec
+018F   3020           00561     MOVLW ' '
+0190   0088           00562     MOVWF PORTD
+0191   2???           00563     CALL exec
+0192   3063           00564     MOVLW 'c'
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0193   0088           00565     MOVWF PORTD
+0194   2???           00566     CALL exec
+0195   306F           00567     MOVLW 'o'
+0196   0088           00568     MOVWF PORTD
+0197   2???           00569     CALL exec
+0198   3072           00570     MOVLW 'r'
+0199   0088           00571     MOVWF PORTD
+019A   2???           00572     CALL exec
+019B   3072           00573     MOVLW 'r'
+019C   0088           00574     MOVWF PORTD
+019D   2???           00575     CALL exec
+019E   3065           00576     MOVLW 'e'
+019F   0088           00577     MOVWF PORTD
+01A0   2???           00578     CALL exec
+01A1   3063           00579     MOVLW 'c'
+01A2   0088           00580     MOVWF PORTD
+01A3   2???           00581     CALL exec
+01A4   3074           00582     MOVLW 't'
+01A5   0088           00583     MOVWF PORTD
+01A6   2???           00584     CALL exec
+01A7   3061           00585     MOVLW 'a'
+01A8   0088           00586     MOVWF PORTD
+01A9   2???           00587     CALL exec
+                      00588     
+                      00589     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+01AA   1007           00590     BCF PORTC,0         ;command mode
+01AB   2???           00591     CALL time
+                      00592     
+01AC   30CF           00593     MOVLW 0xCF          ;LCD position 
+01AD   0088           00594     MOVWF PORTD
+01AE   2???           00595     CALL exec
+                      00596     
+01AF   1407           00597     BSF PORTC,0         ;data mode
+01B0   2???           00598     CALL time
+                      00599     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00600     
+01B1   30F3           00601     MOVLW b'11110011'
+01B2   0088           00602     MOVWF PORTD
+01B3   2???           00603     CALL exec
+                      00604     
+                      00605     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+01B4   1007           00606     BCF PORTC,0         ;command mode
+01B5   2???           00607     CALL time
+                      00608     
+01B6   3090           00609     MOVLW 0x90          ;LCD position 
+01B7   0088           00610     MOVWF PORTD
+01B8   2???           00611     CALL exec
+                      00612     
+01B9   1407           00613     BSF PORTC,0         ;data mode
+01BA   2???           00614     CALL time
+                      00615     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00616     
+01BB   30F3           00617     MOVLW b'11110011'
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+01BC   0088           00618     MOVWF PORTD
+01BD   2???           00619     CALL exec
+                      00620     
+                      00621     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+01BE   1007           00622     BCF PORTC,0         ;command mode
+01BF   2???           00623     CALL time
+                      00624     
+01C0   3096           00625     MOVLW 0x96          ;LCD position 
+01C1   0088           00626     MOVWF PORTD
+01C2   2???           00627     CALL exec
+                      00628     
+01C3   1407           00629     BSF PORTC,0         ;data mode
+01C4   2???           00630     CALL time
+                      00631     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00632     
+01C5   3030           00633     MOVLW '0'
+01C6   0088           00634     MOVWF PORTD
+01C7   2???           00635     CALL exec
+01C8   3020           00636     MOVLW ' '
+01C9   0088           00637     MOVWF PORTD
+01CA   2???           00638     CALL exec
+01CB   306F           00639     MOVLW 'o'
+01CC   0088           00640     MOVWF PORTD
+01CD   2???           00641     CALL exec
+                      00642     
+                      00643     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+01CE   1007           00644     BCF PORTC,0         ;command mode
+01CF   2???           00645     CALL time
+                      00646     
+01D0   309F           00647     MOVLW 0x9F          ;LCD position 
+01D1   0088           00648     MOVWF PORTD
+01D2   2???           00649     CALL exec
+                      00650     
+01D3   1407           00651     BSF PORTC,0         ;data mode
+01D4   2???           00652     CALL time
+                      00653     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00654     
+01D5   30F3           00655     MOVLW b'11110011'
+01D6   0088           00656     MOVWF PORTD
+01D7   2???           00657     CALL exec
+                      00658     
+                      00659     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+01D8   1007           00660     BCF PORTC,0         ;command mode
+01D9   2???           00661     CALL time
+                      00662     
+01DA   30D0           00663     MOVLW 0xD0          ;LCD position 
+01DB   0088           00664     MOVWF PORTD
+01DC   2???           00665     CALL exec
+                      00666     
+01DD   1407           00667     BSF PORTC,0         ;data mode
+01DE   2???           00668     CALL time
+                      00669     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00670     
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 14
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+01DF   30F3           00671     MOVLW b'11110011'
+01E0   0088           00672     MOVWF PORTD
+01E1   2???           00673     CALL exec
+                      00674     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+01E2   1007           00675     BCF PORTC,0         ;command mode
+01E3   2???           00676     CALL time
+                      00677     
+01E4   30D6           00678     MOVLW 0xD6          ;LCD position 
+01E5   0088           00679     MOVWF PORTD
+01E6   2???           00680     CALL exec
+                      00681     
+01E7   1407           00682     BSF PORTC,0         ;data mode
+01E8   2???           00683     CALL time
+                      00684     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00685     
+01E9   302D           00686     MOVLW '-'
+01EA   0088           00687     MOVWF PORTD
+01EB   2???           00688     CALL exec
+01EC   3055           00689     MOVLW 'U'
+01ED   0088           00690     MOVWF PORTD
+01EE   2???           00691     CALL exec
+01EF   302D           00692     MOVLW '-'
+01F0   0088           00693     MOVWF PORTD
+01F1   2???           00694     CALL exec
+                      00695     
+                      00696     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+01F2   1007           00697     BCF PORTC,0         ;command mode
+01F3   2???           00698     CALL time
+                      00699     
+01F4   30DF           00700     MOVLW 0xDF          ;LCD position 
+01F5   0088           00701     MOVWF PORTD
+01F6   2???           00702     CALL exec
+                      00703     
+01F7   1407           00704     BSF PORTC,0         ;data mode
+01F8   2???           00705     CALL time
+                      00706     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00707     
+01F9   30F3           00708     MOVLW b'11110011'
+01FA   0088           00709     MOVWF PORTD
+01FB   2???           00710     CALL exec
+                      00711     
+01FC   3001           00712     MOVLW b'00000001'
+01FD   0089           00713     MOVWF PORTE
+                      00714         
+01FE   0008           00715     RETURN
+                      00716     
+01FF                  00717 PANTFAIL
+                      00718     
+01FF   1007           00719     BCF PORTC,0 ;reset
+0200   3001           00720     MOVLW 0x01
+0201   0088           00721     MOVWF PORTD
+0202   1487           00722     BSF PORTC,1 ;exec
+0203   2???           00723     CALL time
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 15
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0204   1087           00724     BCF PORTC,1
+0205   2???           00725     CALL time
+                      00726     
+0206   1007           00727     BCF PORTC,0         ;command mode
+0207   2???           00728     CALL time
+                      00729     
+0208   3080           00730     MOVLW 0x80          ;LCD position
+0209   0088           00731     MOVWF PORTD
+020A   2???           00732     CALL exec
+                      00733     
+020B   1407           00734     BSF PORTC,0         ;data mode
+020C   2???           00735     CALL time
+                      00736     
+020D   30F4           00737     MOVLW b'11110100'
+020E   0088           00738     MOVWF PORTD
+020F   2???           00739     CALL exec
+                      00740     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0210   1007           00741     BCF PORTC,0         ;command mode
+0211   2???           00742     CALL time
+                      00743     
+0212   3084           00744     MOVLW 0x84          ;LCD position 
+0213   0088           00745     MOVWF PORTD
+0214   2???           00746     CALL exec
+                      00747     
+0215   1407           00748     BSF PORTC,0         ;data mode
+0216   2???           00749     CALL time
+                      00750     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00751     
+0217   304C           00752     MOVLW 'L'
+0218   0088           00753     MOVWF PORTD
+0219   2???           00754     CALL exec
+021A   3061           00755     MOVLW 'a'
+021B   0088           00756     MOVWF PORTD
+021C   2???           00757     CALL exec
+021D   3020           00758     MOVLW ' '
+021E   0088           00759     MOVWF PORTD
+021F   2???           00760     CALL exec
+0220   3063           00761     MOVLW 'c'
+0221   0088           00762     MOVWF PORTD
+0222   2???           00763     CALL exec
+0223   306C           00764     MOVLW 'l'
+0224   0088           00765     MOVWF PORTD
+0225   2???           00766     CALL exec
+0226   3061           00767     MOVLW 'a'
+0227   0088           00768     MOVWF PORTD
+0228   2???           00769     CALL exec
+0229   3076           00770     MOVLW 'v'
+022A   0088           00771     MOVWF PORTD
+022B   2???           00772     CALL exec
+022C   3065           00773     MOVLW 'e'
+022D   0088           00774     MOVWF PORTD
+022E   2???           00775     CALL exec
+                      00776     
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 16
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00777     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+022F   1007           00778     BCF PORTC,0         ;command mode
+0230   2???           00779     CALL time
+                      00780     
+0231   308F           00781     MOVLW 0x8F          ;LCD position 
+0232   0088           00782     MOVWF PORTD
+0233   2???           00783     CALL exec
+                      00784     
+0234   1407           00785     BSF PORTC,0         ;data mode
+0235   2???           00786     CALL time
+                      00787     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00788     
+0236   30F4           00789     MOVLW b'11110100'
+0237   0088           00790     MOVWF PORTD
+0238   2???           00791     CALL exec
+                      00792     
+                      00793     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0239   1007           00794     BCF PORTC,0         ;command mode
+023A   2???           00795     CALL time
+                      00796     
+023B   30C0           00797     MOVLW 0xC0          ;LCD position 
+023C   0088           00798     MOVWF PORTD
+023D   2???           00799     CALL exec
+                      00800     
+023E   1407           00801     BSF PORTC,0         ;data mode
+023F   2???           00802     CALL time
+                      00803     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00804     
+0240   30F4           00805     MOVLW b'11110100'
+0241   0088           00806     MOVWF PORTD
+0242   2???           00807     CALL exec
+                      00808     
+                      00809     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0243   1007           00810     BCF PORTC,0         ;command mode
+0244   2???           00811     CALL time
+                      00812     
+0245   30C4           00813     MOVLW 0xC4          ;LCD position 
+0246   0088           00814     MOVWF PORTD
+0247   2???           00815     CALL exec
+                      00816     
+0248   1407           00817     BSF PORTC,0         ;data mode
+0249   2???           00818     CALL time
+                      00819     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00820     
+024A   3065           00821     MOVLW 'e'
+024B   0088           00822     MOVWF PORTD
+024C   2???           00823     CALL exec
+024D   3073           00824     MOVLW 's'
+024E   0088           00825     MOVWF PORTD
+024F   2???           00826     CALL exec
+0250   3074           00827     MOVLW 't'
+0251   0088           00828     MOVWF PORTD
+0252   2???           00829     CALL exec
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 17
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0253   3061           00830     MOVLW 'a'
+0254   0088           00831     MOVWF PORTD
+0255   2???           00832     CALL exec
+0256   3020           00833     MOVLW ' '
+0257   0088           00834     MOVWF PORTD
+0258   2???           00835     CALL exec
+0259   306D           00836     MOVLW 'm'
+025A   0088           00837     MOVWF PORTD
+025B   2???           00838     CALL exec
+025C   3061           00839     MOVLW 'a'
+025D   0088           00840     MOVWF PORTD
+025E   2???           00841     CALL exec
+025F   306C           00842     MOVLW 'l'
+0260   0088           00843     MOVWF PORTD
+0261   2???           00844     CALL exec
+                      00845     
+                      00846     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0262   1007           00847     BCF PORTC,0         ;command mode
+0263   2???           00848     CALL time
+                      00849     
+0264   30CF           00850     MOVLW 0xCF          ;LCD position 
+0265   0088           00851     MOVWF PORTD
+0266   2???           00852     CALL exec
+                      00853     
+0267   1407           00854     BSF PORTC,0         ;data mode
+0268   2???           00855     CALL time
+                      00856     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00857     
+0269   30F4           00858     MOVLW b'11110100'
+026A   0088           00859     MOVWF PORTD
+026B   2???           00860     CALL exec
+                      00861     
+                      00862     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+026C   1007           00863     BCF PORTC,0         ;command mode
+026D   2???           00864     CALL time
+                      00865     
+026E   3090           00866     MOVLW 0x90          ;LCD position 
+026F   0088           00867     MOVWF PORTD
+0270   2???           00868     CALL exec
+                      00869     
+0271   1407           00870     BSF PORTC,0         ;data mode
+0272   2???           00871     CALL time
+                      00872     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00873     
+0273   30F4           00874     MOVLW b'11110100'
+0274   0088           00875     MOVWF PORTD
+0275   2???           00876     CALL exec
+                      00877     
+                      00878     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0276   1007           00879     BCF PORTC,0         ;command mode
+0277   2???           00880     CALL time
+                      00881     
+0278   3096           00882     MOVLW 0x96          ;LCD position 
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 18
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0279   0088           00883     MOVWF PORTD
+027A   2???           00884     CALL exec
+                      00885     
+027B   1407           00886     BSF PORTC,0         ;data mode
+027C   2???           00887     CALL time
+                      00888     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00889     
+027D   3030           00890     MOVLW '0'
+027E   0088           00891     MOVWF PORTD
+027F   2???           00892     CALL exec
+0280   3020           00893     MOVLW ' '
+0281   0088           00894     MOVWF PORTD
+0282   2???           00895     CALL exec
+0283   306F           00896     MOVLW 'o'
+0284   0088           00897     MOVWF PORTD
+0285   2???           00898     CALL exec
+                      00899     
+                      00900     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0286   1007           00901     BCF PORTC,0         ;command mode
+0287   2???           00902     CALL time
+                      00903     
+0288   309F           00904     MOVLW 0x9F          ;LCD position 
+0289   0088           00905     MOVWF PORTD
+028A   2???           00906     CALL exec
+                      00907     
+028B   1407           00908     BSF PORTC,0         ;data mode
+028C   2???           00909     CALL time
+                      00910     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00911     
+028D   30F4           00912     MOVLW b'11110100'
+028E   0088           00913     MOVWF PORTD
+028F   2???           00914     CALL exec
+                      00915     
+                      00916     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0290   1007           00917     BCF PORTC,0         ;command mode
+0291   2???           00918     CALL time
+                      00919     
+0292   30D0           00920     MOVLW 0xD0          ;LCD position 
+0293   0088           00921     MOVWF PORTD
+0294   2???           00922     CALL exec
+                      00923     
+0295   1407           00924     BSF PORTC,0         ;data mode
+0296   2???           00925     CALL time
+                      00926     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00927     
+0297   30F4           00928     MOVLW b'11110100'
+0298   0088           00929     MOVWF PORTD
+0299   2???           00930     CALL exec
+                      00931     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+029A   1007           00932     BCF PORTC,0         ;command mode
+029B   2???           00933     CALL time
+                      00934     
+029C   30D6           00935     MOVLW 0xD6          ;LCD position 
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 19
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+029D   0088           00936     MOVWF PORTD
+029E   2???           00937     CALL exec
+                      00938     
+029F   1407           00939     BSF PORTC,0         ;data mode
+02A0   2???           00940     CALL time
+                      00941     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00942     
+02A1   302D           00943     MOVLW '-'
+02A2   0088           00944     MOVWF PORTD
+02A3   2???           00945     CALL exec
+02A4   30F4           00946     MOVLW b'11110100'
+02A5   0088           00947     MOVWF PORTD
+02A6   2???           00948     CALL exec
+02A7   302D           00949     MOVLW '-'
+02A8   0088           00950     MOVWF PORTD
+02A9   2???           00951     CALL exec
+                      00952     
+                      00953     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+02AA   1007           00954     BCF PORTC,0         ;command mode
+02AB   2???           00955     CALL time
+                      00956     
+02AC   30DF           00957     MOVLW 0xDF          ;LCD position 
+02AD   0088           00958     MOVWF PORTD
+02AE   2???           00959     CALL exec
+                      00960     
+02AF   1407           00961     BSF PORTC,0         ;data mode
+02B0   2???           00962     CALL time
+                      00963     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00964     
+02B1   30F4           00965     MOVLW b'11110100'
+02B2   0088           00966     MOVWF PORTD
+02B3   2???           00967     CALL exec
+                      00968     
+02B4   3002           00969     MOVLW b'00000010'
+02B5   0089           00970     MOVWF PORTE
+                      00971         
+02B6   0008           00972     RETURN
+                      00973     
+02B7                  00974 exec
+                      00975 
+02B7   1487           00976     BSF PORTC,1         ;exec
+02B8   2???           00977     CALL time
+02B9   1087           00978     BCF PORTC,1
+02BA   2???           00979     CALL time
+02BB   0008           00980     RETURN
+                      00981     
+02BC                  00982 time
+02BC   01B0           00983     CLRF i
+02BD   300A           00984     MOVLW d'10'
+02BE   00B1           00985     MOVWF j
+02BF                  00986 ciclo    
+02BF   3050           00987     MOVLW d'80'
+02C0   00B0           00988     MOVWF i
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 20
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Message[305]: Using default destination of 1 (file).
+02C1   0BB0           00989     DECFSZ i
+02C2   2???           00990     GOTO $-1
+Message[305]: Using default destination of 1 (file).
+02C3   0BB1           00991     DECFSZ j
+02C4   2???           00992     GOTO ciclo
+02C5   0008           00993     RETURN
+                      00994     
+02C6                  00995 time2
+02C6   3001           00996     MOVLW d'1'
+02C7   00B0           00997     MOVWF i
+02C8                  00998 loopj:
+02C8   3008           00999     MOVLW d'8'
+02C9   00B1           01000     MOVWF j
+02CA                  01001 loopk:
+02CA   30FA           01002     MOVLW d'250'
+02CB   00B2           01003     MOVWF k
+02CC                  01004 loopi:
+02CC   0000           01005     NOP
+02CD   0000           01006     NOP
+02CE   0BB2           01007     DECFSZ k, 1
+02CF   2???           01008     GOTO loopi
+02D0   0BB1           01009     DECFSZ j, 1
+02D1   2???           01010     GOTO loopk
+02D2   0BB0           01011     DECFSZ i, 1
+02D3   2???           01012     GOTO loopj
+02D4   0008           01013     RETURN
+                      01014                         
+                      01015                         
+2CF4 3FFF             01016     END
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 21
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ABDEN                             00000000
+ABDOVF                            00000007
+ACKDT                             00000005
+ACKEN                             00000004
+ACKSTAT                           00000006
+ADCON0                            0000001F
+ADCON1                            0000009F
+ADCS0                             00000006
+ADCS1                             00000007
+ADDEN                             00000003
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+ANS0                              00000000
+ANS1                              00000001
+ANS10                             00000002
+ANS11                             00000003
+ANS12                             00000004
+ANS13                             00000005
+ANS2                              00000002
+ANS3                              00000003
+ANS4                              00000004
+ANS5                              00000005
+ANS6                              00000006
+ANS7                              00000007
+ANS8                              00000000
+ANS9                              00000001
+ANSEL                             00000188
+ANSELH                            00000189
+BAUDCTL                           00000187
+BCLIE                             00000003
+BCLIF                             00000003
+BF                                00000000
+BRG0                              00000000
+BRG1                              00000001
+BRG10                             00000002
+BRG11                             00000003
+BRG12                             00000004
+BRG13                             00000005
+BRG14                             00000006
+BRG15                             00000007
+BRG16                             00000003
+BRG2                              00000002
+BRG3                              00000003
+BRG4                              00000004
+BRG5                              00000005
+BRG6                              00000006
+BRG7                              00000007
+BRG8                              00000000
+BRG9                              00000001
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 22
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+BRGH                              00000002
+C                                 00000000
+C1CH0                             00000000
+C1CH1                             00000001
+C1IE                              00000005
+C1IF                              00000005
+C1OE                              00000005
+C1ON                              00000007
+C1OUT                             00000006
+C1POL                             00000004
+C1R                               00000002
+C1RSEL                            00000005
+C1SEN                             00000005
+C2CH0                             00000000
+C2CH1                             00000001
+C2IE                              00000006
+C2IF                              00000006
+C2OE                              00000005
+C2ON                              00000007
+C2OUT                             00000006
+C2POL                             00000004
+C2R                               00000002
+C2REN                             00000004
+C2RSEL                            00000004
+C2SYNC                            00000000
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCP2CON                           0000001D
+CCP2IE                            00000000
+CCP2IF                            00000000
+CCP2M0                            00000000
+CCP2M1                            00000001
+CCP2M2                            00000002
+CCP2M3                            00000003
+CCP2X                             00000005
+CCP2Y                             00000004
+CCPR1                             00000015
+CCPR1H                            00000016
+CCPR1L                            00000015
+CCPR2                             0000001B
+CCPR2H                            0000001C
+CCPR2L                            0000001B
+CHS0                              00000002
+CHS1                              00000003
+CHS2                              00000004
+CHS3                              00000005
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 23
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CKE                               00000006
+CKP                               00000004
+CM1CON0                           00000107
+CM2CON0                           00000108
+CM2CON1                           00000109
+CREN                              00000004
+CSRC                              00000007
+D                                 00000005
+DATA_ADDRESS                      00000005
+DC                                00000001
+DC1B0                             00000004
+DC1B1                             00000005
+DC2B0                             00000004
+DC2B1                             00000005
+D_A                               00000005
+D_NOT_A                           00000005
+ECCPAS                            0000009C
+ECCPAS0                           00000004
+ECCPAS1                           00000005
+ECCPAS2                           00000006
+ECCPASE                           00000007
+EEADR                             0000010D
+EEADRH                            0000010F
+EECON1                            0000018C
+EECON2                            0000018D
+EEDAT                             0000010C
+EEDATA                            0000010C
+EEDATH                            0000010E
+EEIE                              00000004
+EEIF                              00000004
+EEPGD                             00000007
+F                                 00000001
+FERR                              00000002
+FSR                               00000004
+FVREN                             00000000
+GCEN                              00000007
+GIE                               00000007
+GO                                00000001
+GO_DONE                           00000001
+GO_NOT_DONE                       00000001
+HTS                               00000002
+I2C_DATA                          00000005
+I2C_READ                          00000002
+I2C_START                         00000003
+I2C_STOP                          00000004
+INDF                              00000000
+INICIO                            00000046
+INITLCD                           00000033
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IOCB                              00000096
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 24
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+IOCB0                             00000000
+IOCB1                             00000001
+IOCB2                             00000002
+IOCB3                             00000003
+IOCB4                             00000004
+IOCB5                             00000005
+IOCB6                             00000006
+IOCB7                             00000007
+IRCF0                             00000004
+IRCF1                             00000005
+IRCF2                             00000006
+IRP                               00000007
+LTS                               00000001
+MC1OUT                            00000007
+MC2OUT                            00000006
+MSK                               00000093
+MSK0                              00000000
+MSK1                              00000001
+MSK2                              00000002
+MSK3                              00000003
+MSK4                              00000004
+MSK5                              00000005
+MSK6                              00000006
+MSK7                              00000007
+NOT_A                             00000005
+NOT_ADDRESS                       00000005
+NOT_BO                            00000000
+NOT_BOR                           00000000
+NOT_DONE                          00000001
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_RC8                           00000006
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+NOT_TX8                           00000006
+NOT_W                             00000002
+NOT_WRITE                         00000002
+OERR                              00000001
+OPTION_REG                        00000081
+OSCCON                            0000008F
+OSCTUNE                           00000090
+OSFIE                             00000007
+OSFIF                             00000007
+OSTS                              00000003
+P                                 00000004
+P1M0                              00000006
+P1M1                              00000007
+PANTFAIL                          000001FF
+PANTIN                            00000072
+PANTSUC                           0000013E
+PCL                               00000002
+PCLATH                            0000000A
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 25
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PCON                              0000008E
+PDC0                              00000000
+PDC1                              00000001
+PDC2                              00000002
+PDC3                              00000003
+PDC4                              00000004
+PDC5                              00000005
+PDC6                              00000006
+PEIE                              00000006
+PEN                               00000002
+PIE1                              0000008C
+PIE2                              0000008D
+PIR1                              0000000C
+PIR2                              0000000D
+PORTA                             00000005
+PORTB                             00000006
+PORTC                             00000007
+PORTD                             00000008
+PORTE                             00000009
+PR2                               00000092
+PRSEN                             00000007
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+PSSAC0                            00000002
+PSSAC1                            00000003
+PSSBD0                            00000000
+PSSBD1                            00000001
+PSTRCON                           0000009D
+PULSR                             00000002
+PULSS                             00000003
+PWM1CON                           0000009B
+R                                 00000002
+RA0                               00000000
+RA1                               00000001
+RA2                               00000002
+RA3                               00000003
+RA4                               00000004
+RA5                               00000005
+RA6                               00000006
+RA7                               00000007
+RB0                               00000000
+RB1                               00000001
+RB2                               00000002
+RB3                               00000003
+RB4                               00000004
+RB5                               00000005
+RB6                               00000006
+RB7                               00000007
+RBIE                              00000003
+RBIF                              00000000
+RC0                               00000000
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 26
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+RC1                               00000001
+RC2                               00000002
+RC3                               00000003
+RC4                               00000004
+RC5                               00000005
+RC6                               00000006
+RC7                               00000007
+RC8_9                             00000006
+RC9                               00000006
+RCD8                              00000000
+RCEN                              00000003
+RCIDL                             00000006
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+RD0                               00000000
+RD1                               00000001
+RD2                               00000002
+RD3                               00000003
+RD4                               00000004
+RD5                               00000005
+RD6                               00000006
+RD7                               00000007
+RE0                               00000000
+RE1                               00000001
+RE2                               00000002
+RE3                               00000003
+READ_WRITE                        00000002
+RP0                               00000005
+RP1                               00000006
+RSEN                              00000001
+RX9                               00000006
+RX9D                              00000000
+R_NOT_W                           00000002
+R_W                               00000002
+S                                 00000003
+SBOREN                            00000004
+SCKP                              00000004
+SCS                               00000000
+SEN                               00000000
+SENDB                             00000003
+SMP                               00000007
+SPBRG                             00000099
+SPBRGH                            0000009A
+SPEN                              00000007
+SR0                               00000006
+SR1                               00000007
+SRCON                             00000185
+SREN                              00000005
+SSPADD                            00000093
+SSPBUF                            00000013
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 27
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+SSPCON                            00000014
+SSPCON2                           00000091
+SSPEN                             00000005
+SSPIE                             00000003
+SSPIF                             00000003
+SSPM0                             00000000
+SSPM1                             00000001
+SSPM2                             00000002
+SSPM3                             00000003
+SSPMSK                            00000093
+SSPOV                             00000006
+SSPSTAT                           00000094
+START                             00000000
+STATUS                            00000003
+STRA                              00000000
+STRB                              00000001
+STRC                              00000002
+STRD                              00000003
+STRSYNC                           00000004
+SWDTEN                            00000000
+SYNC                              00000004
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1GINV                            00000007
+T1GIV                             00000007
+T1GSS                             00000001
+T1INSYNC                          00000002
+T1OSCEN                           00000003
+T1SYNC                            00000002
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1                              0000000E
+TMR1CS                            00000001
+TMR1GE                            00000006
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOUTPS0                           00000003
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 28
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISA0                            00000000
+TRISA1                            00000001
+TRISA2                            00000002
+TRISA3                            00000003
+TRISA4                            00000004
+TRISA5                            00000005
+TRISA6                            00000006
+TRISA7                            00000007
+TRISB                             00000086
+TRISB0                            00000000
+TRISB1                            00000001
+TRISB2                            00000002
+TRISB3                            00000003
+TRISB4                            00000004
+TRISB5                            00000005
+TRISB6                            00000006
+TRISB7                            00000007
+TRISC                             00000087
+TRISC0                            00000000
+TRISC1                            00000001
+TRISC2                            00000002
+TRISC3                            00000003
+TRISC4                            00000004
+TRISC5                            00000005
+TRISC6                            00000006
+TRISC7                            00000007
+TRISD                             00000088
+TRISD0                            00000000
+TRISD1                            00000001
+TRISD2                            00000002
+TRISD3                            00000003
+TRISD4                            00000004
+TRISD5                            00000005
+TRISD6                            00000006
+TRISD7                            00000007
+TRISE                             00000089
+TRISE0                            00000000
+TRISE1                            00000001
+TRISE2                            00000002
+TRISE3                            00000003
+TRMT                              00000001
+TUN0                              00000000
+TUN1                              00000001
+TUN2                              00000002
+TUN3                              00000003
+TUN4                              00000004
+TX8_9                             00000006
+TX9                               00000006
+TX9D                              00000000
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 29
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TXD8                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+UA                                00000001
+ULPWUE                            00000005
+ULPWUIE                           00000002
+ULPWUIF                           00000002
+VCFG0                             00000004
+VCFG1                             00000005
+VR0                               00000000
+VR1                               00000001
+VR2                               00000002
+VR3                               00000003
+VRCON                             00000097
+VREN                              00000007
+VROE                              00000006
+VRR                               00000005
+VRSS                              00000004
+W                                 00000000
+WCOL                              00000007
+WDTCON                            00000105
+WDTPS0                            00000001
+WDTPS1                            00000002
+WDTPS2                            00000003
+WDTPS3                            00000004
+WPUB                              00000095
+WPUB0                             00000000
+WPUB1                             00000001
+WPUB2                             00000002
+WPUB3                             00000003
+WPUB4                             00000004
+WPUB5                             00000005
+WPUB6                             00000006
+WPUB7                             00000007
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+WUE                               00000001
+Z                                 00000002
+_BOR21V                           00003EFF
+_BOR40V                           00003FFF
+_BOR4V_BOR21V                     00003EFF
+_BOR4V_BOR40V                     00003FFF
+_BOREN_NSLEEP                     00003EFF
+_BOREN_OFF                        00003CFF
+_BOREN_ON                         00003FFF
+_BOREN_SBODEN                     00003DFF
+_BOR_NSLEEP                       00003EFF
+_BOR_OFF                          00003CFF
+_BOR_ON                           00003FFF
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 30
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_BOR_SBODEN                       00003DFF
+_CONFIG1                          00002007
+_CONFIG2                          00002008
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003F7F
+_CP_OFF                           00003FFF
+_CP_ON                            00003FBF
+_DEBUG_OFF                        00003FFF
+_DEBUG_ON                         00001FFF
+_DEVID1                           00002006
+_EC_OSC                           00003FFB
+_EXTRC                            00003FFF
+_EXTRCIO                          00003FFE
+_EXTRC_OSC_CLKOUT                 00003FFF
+_EXTRC_OSC_NOCLKOUT               00003FFE
+_FCMEN_OFF                        000037FF
+_FCMEN_ON                         00003FFF
+_FOSC_EC                          00003FFB
+_FOSC_EXTRC_CLKOUT                00003FFF
+_FOSC_EXTRC_NOCLKOUT              00003FFE
+_FOSC_HS                          00003FFA
+_FOSC_INTRC_CLKOUT                00003FFD
+_FOSC_INTRC_NOCLKOUT              00003FFC
+_FOSC_LP                          00003FF8
+_FOSC_XT                          00003FF9
+_HS_OSC                           00003FFA
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_IESO_OFF                         00003BFF
+_IESO_ON                          00003FFF
+_INTOSC                           00003FFD
+_INTOSCIO                         00003FFC
+_INTRC_OSC_CLKOUT                 00003FFD
+_INTRC_OSC_NOCLKOUT               00003FFC
+_LP_OSC                           00003FF8
+_LVP_OFF                          00002FFF
+_LVP_ON                           00003FFF
+_MAIN_PROG_02C2                   000002C2
+_MCLRE_OFF                        00003FDF
+_MCLRE_ON                         00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FEF
+_WDTE_OFF                         00003FF7
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FF7
+_WDT_ON                           00003FFF
+_WRT_1FOURTH                      00003BFF
+_WRT_256                          00003DFF
+_WRT_HALF                         000039FF
+_WRT_OFF                          00003FFF
+_XT_OSC                           00003FF9
+MPASM 5.87                          EXAM.ASM   11-18-2020  11:18:33         PAGE 31
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F887                          00000001
+__DEBUG                           
+__MPLAB_DEBUGGER_SIMULATOR        1
+aux                               00000049
+c1                                00000033
+c2                                00000034
+c3                                00000035
+c4                                00000036
+c5                                00000037
+c6                                00000038
+c7                                00000039
+c8                                00000040
+ciclo                             000002BF
+d1                                00000041
+d2                                00000042
+d3                                00000043
+d4                                00000044
+d5                                00000045
+d6                                00000046
+d7                                00000047
+d8                                00000048
+exec                              000002B7
+guarda                            0000006E
+i                                 00000030
+j                                 00000031
+k                                 00000032
+loopi                             000002CC
+loopj                             000002C8
+loopk                             000002CA
+time                              000002BC
+time2                             000002C6
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :    10 reported,     0 suppressed
+
+
